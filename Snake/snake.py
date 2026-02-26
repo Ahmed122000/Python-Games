@@ -46,6 +46,10 @@ class SnakeGame:
         self.root.bind("<Down>",    lambda e:self.change_dir("down"))
         self.root.bind("<Right>",   lambda e:self.change_dir("right"))
         self.root.bind("<Left>",    lambda e:self.change_dir("left"))
+        self.root.bind("w",         lambda e:self.change_dir("up"))
+        self.root.bind("s",         lambda e:self.change_dir("down"))
+        self.root.bind("d",         lambda e:self.change_dir("right"))
+        self.root.bind("a",         lambda e:self.change_dir("left"))
         self.root.bind("R",         lambda e:self.restart())
         self.root.bind("r",         lambda e:self.restart())
         self.root.bind("<space>",   lambda e:self.toggle_pause())
@@ -60,7 +64,7 @@ class SnakeGame:
     def toggle_pause(self):
         self.running = not self.running
         if self.running and not self.game_over:
-            self.loop_game()
+            self.game_loop()
         self.draw_all()
 
     def change_dir(self, new_dir):
