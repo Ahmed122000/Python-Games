@@ -72,7 +72,7 @@ class MineSweeper:
         self.cols = max(5, min(30, c))
         max_mines = self.cols * self.rows -1
         self.mines = max(1, min(max_mines, m))
-        self.mine_label.config(text=f'Mines: self.mines')
+        self.mine_label.config(text=f'Mines: {self.mines}')
         self.restart()
 
     #create the board with the predefined configurations 
@@ -86,6 +86,7 @@ class MineSweeper:
                 b.grid(row=r, column=c)
                 b.bind('<Button-1>', lambda e, rr=r, cc=c: self.on_left_click(rr, cc))
                 b.bind('<Button-3>', lambda e, rr=r, cc=c: self.on_right_click(rr, cc))
+                
                 self.buttons[r][c] = b
 
         self.master.update_idletasks()
@@ -101,8 +102,8 @@ class MineSweeper:
         safe = set()
 
         #exclude the safe zone
-        for rr in range(safe_r -1, safe_r+2):
-            for cc in range(safe_c-1, safe_c+2):
+        for rr in range(safe_r - 1, safe_r + 2):
+            for cc in range(safe_c - 1, safe_c + 2):
                 if 0 <= rr < self.rows and 0 <= cc < self.cols:
                     safe.add((rr, cc))
         
@@ -128,49 +129,71 @@ class MineSweeper:
 
 
     def on_left_click(self, r, c):
+        #start the game
         if not self.timer_running:
             self.start_timer()
+        
+        #get the clicked cell
         cell = self.cells[r][c]
+        
+        #start to place the mines after getting the safe area center
         if self.first_click:
             self.place_mines(r, c)
             self.first_click=False
         
+        #don't reveal the flagged (suspected mine) cell or revealed cell
         if cell.flagged or cell.is_revealed:
             return 
-        
+
+        #if cell is mine so it's game over  
         if cell.is_mine:
             self.reveal_mine(r, c)
             self.game_over(False)
             return
+        
+        #reveal the cell
         self.reveal_cell(r, c)
+        
+        #check if the game ended with winning case
         if self.check_win():
             self.game_over(True) 
 
 
     def on_right_click(self, r, c):
+        #get the clicked cell
         cell = self.cells[r][c]
+        b = self.buttons[r][c]
+        
+        #don't flag the revealed cell
         if cell.is_revealed:
             return 
         
+        #add or remove the flag 
         cell.flagged = not cell.flagged
-        b = self.buttons[r][c]
+        
+        
         if cell.flagged:
             b.config(text='⚑')
         else:
             b.config(text="")
+        
+        
         self.update_mine_count()
 
     def reveal_cell(self, r, c):
+        # in case the indices out of range
         if r <0 or r >=self.rows or c < 0 or c >= self.cols: 
             return 
         
         cell = self.cells[r][c]
         b = self.buttons[r][c]
-        
+       
+        # don't reveal revealed or flagged 
         if cell.is_revealed or cell.flagged:
             return
         
-        cell.revealed = True
+        cell.is_revealed = True
+        
         b.config(relief=tk.SUNKEN, state = tk.DISABLED)
         
         if cell.adjacent > 0:
@@ -200,6 +223,7 @@ class MineSweeper:
                 cell= self.cells[r][c]
                 if not cell.is_mine and not cell.is_revealed:
                     return False
+        return True
                 
     
     def game_over(self, won):
@@ -210,7 +234,7 @@ class MineSweeper:
             for r in range(self.rows):
                 for c in range(self.cols):
                     if self.cells[r][c].is_mine:
-                        self.butons[r][c].config(text='⚑')
+                        self.buttons[r][c].config(text='⚑')
         
         else: 
             messagebox.showinfo("Game Over", "Boom! you clicked on a mine.")
@@ -225,7 +249,8 @@ class MineSweeper:
 
     def update_mine_count(self):
         flags = sum(1 for r in range(self.rows) for c in range(self.cols) if self.cells[r][c].flagged)
-        remaining = max(0, self.mins, flags)   
+        print(f"now there is: {flags}  flag(s)")
+        remaining = max(0, self.mines-flags)   
         self.mine_label.config(text= f"Mines: {remaining}")
 
     def start_timer(self):
@@ -237,7 +262,7 @@ class MineSweeper:
         if not self.timer_running:
             return 
         self.elapsed = time.time() - self.start_time
-        self.time_label.config(text=f"Time: {self.elapsed}")
+        self.time_label.config(text=f"Time: {self.elapsed:0.2f}")
         self.master.after(250, self._tick)
 
     def stop_timer(self):
@@ -251,7 +276,7 @@ class MineSweeper:
         self.start_time = None
         self.elapsed = 0
         self.timer_running= False
-        
+        self.time_label.config(text='Time: 0')
         self.rows = int(self.rows_var.get())
         self.cols = int(self.cols_var.get())
         self.mines = int(self.mines_var.get())
@@ -262,5 +287,5 @@ class MineSweeper:
             self.mines_var.set(self.mines)
             self.mine_label.config(text=f"Mines: {self.mines}")
             self.time_label.config(text="Time: 0")
-        print('creating the new board')
+
         self._create_board()
