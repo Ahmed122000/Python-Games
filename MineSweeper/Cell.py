@@ -10,5 +10,5 @@ class Cell:
         self.col = col                  #column number
         self.is_mine = False            #is this cell mine
         self.is_revealed = False        #is this cell revealed 
-        self.flagged = False            #??
+        self.flagged = False            #if the cell is flagged so it's suspected to be mine
         self.adjacent = 0               #number of adjacent mine cells
