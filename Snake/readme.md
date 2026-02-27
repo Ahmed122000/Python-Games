@@ -33,7 +33,7 @@ No additional packages are required!
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/snake-game.git
+git clone https://github.com/ahmed122000/Python-Games.git
 cd snake-game
 ```
 2. Run the game:
@@ -68,3 +68,4 @@ This project is open source and available under the [MIT License](../LICENSE).
 - Inspired by the classic Nokia Snake game
 - Built with Python's built-in Tkinter library
 - Based on the Udemy course: ["Python Game Development"](https://www.udemy.com/course/master-python-game-development/)
+
