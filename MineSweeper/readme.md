@@ -1,4 +1,4 @@
-# Minesweeper Game
+# Minesweeper Game 💣
 
 A classic Minesweeper game built with Python and tkinter. This implementation features a customizable grid, real-time timer, flagging system, and the traditional Minesweeper gameplay mechanics
 
