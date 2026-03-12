@@ -32,6 +32,16 @@ The classic logic puzzle game where you must clear a minefield without triggerin
 - Visual feedback with explosion effect and numbered cells
 - Win detection when all safe cells are revealed
 
+### 3. Tic Tac Toe
+The classic game two-player Tic Tac Toe game.
+
+**Features:**
+- Two-player local gameplay (Player 1 vs Player 2)
+- Visual distinction between players — **X** appears in blue, **O** in red
+- Automatic win detection across rows, columns, and diagonals
+- Tie detection when the board is full with no winner
+- Auto-resets the board after each game ends
+
 ## 📋 Requirements
 
 - **Python 3.x** - Download from [python.org](https://www.python.org/)
@@ -54,6 +64,10 @@ cd Python-Games
    b.MineSweeper:
    ```bash
    cd MineSweeper
+   ```
+   c.Tic Tac Toe:
+   ```bash
+   cd Tic-Tac-Toe
    ```
 3. Run the game:
 ```bash
@@ -84,6 +98,16 @@ python main.py
 | SpinBoxes | Adjust board size and mine count |
 
 **Objective**: Clear all safe cells without clicking on any mines. Use numbered cells as clues - they show how many mines are adjacent. Flag cells you suspect contain mines.
+
+### Tic Tac Toe
+
+1. The game starts with **Player 1 (X)**.
+2. Click any empty cell to place your mark.
+3. Players alternate turns automatically.
+4. The game announces the winner or a tie via a popup dialog.
+5. The board resets automatically after each round.
+
+**Objective** is to fill full row/column/diagonal with the same sign
 
 ## 🎯 Game Mechanics
 
@@ -116,7 +140,7 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 🚧 Coming Soon
 
 More classic games are in development! Stay tuned for:
-- Tic-Tac-Toe
 - Pong
 - Tetris
 - And more!
+
