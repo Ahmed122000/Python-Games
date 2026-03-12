@@ -46,3 +46,8 @@ The game checks for:
 ## License
 
 This project is open source and free to use under the [MIT License](../LICENSE).
+
+## 👏 Acknowledgments
+
+- Built with Python's built-in Tkinter library
+- Based on the Udemy course: ["Python Game Development"](https://www.udemy.com/course/master-python-game-development/)
